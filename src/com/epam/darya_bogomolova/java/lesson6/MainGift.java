@@ -37,7 +37,7 @@ public class MainGift {
         }
 
         Connector connector = new Connector();
-        //connector.writeSerializeObject(candyGift);
+        connector.writeSerializeObject(candyGift);
 
         System.out.println("Enter type of candies:\n1 - chocolate\n2 - fruit");
         int numTypeCandies = in.nextInt();
