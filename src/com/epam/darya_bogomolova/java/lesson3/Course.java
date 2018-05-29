@@ -1,19 +1,32 @@
 package com.epam.darya_bogomolova.java.lesson3;
 
-public class Course {
-    private String name;
-    private Number duration;
+import java.time.LocalDateTime;
 
-    public Course(String name, int duration) {
+
+public class Course {
+    String name;
+    int duration;
+    LocalDateTime startDate;
+
+    public Course(String name, int duration, LocalDateTime startDate) {
         this.name = name;
         this.duration = duration;
+        this.startDate = startDate;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String toString() {
+        return "Course{" +
+                "name='" + name + '\'' +
+                ", duration=" + duration +
+                ", startDate=" + startDate +
+                '}';
     }
 
-    public Number getDuration() {
-        return duration;
+    public LocalDateTime getDateOfEndCourse () {
+        LocalDateTime endDate = startDate;
+        endDate.plusDays(duration/8);
+        endDate.plusHours(duration%8);
+        return endDate;
     }
 }

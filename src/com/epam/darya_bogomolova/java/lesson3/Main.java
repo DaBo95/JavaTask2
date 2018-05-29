@@ -1,45 +1,60 @@
 package com.epam.darya_bogomolova.java.lesson3;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        Course course1 = new Course("Java Servlets", 16);
-        Course course2 = new Course("Struts Frameworks", 24);
-        Course course3 = new Course("Java Technologies Overview", 24);
-        Course course4 = new Course("JFS/Swing", 24);
-        Course course5 = new Course("JDBC", 24);
-        List<Course> courses = new ArrayList<>();
-        courses.add(course1);
-        courses.add(course2);
-        StudyProgram program1 = new StudyProgram(LocalDateTime.of(2018, 1, 16, 9, 0), courses);
-        courses.clear();
-        courses.add(course3);
-        courses.add(course4);
-        courses.add(course5);
-        StudyProgram program2 = new StudyProgram(LocalDateTime.of(2018, 2, 8, 11, 0), courses);
 
-        Student student1 = new Student("Sedorchuk", "Petr", program1);
-        Student student2 = new Student("Popov", "Sergei", program2);
+        Course course1 = new Course("Java Dev", 45, LocalDateTime.of(2018, 5, 15, 17, 0));
+        Course course2 = new Course("UI", 38, LocalDateTime.of(2018, 5, 30, 11, 0));
+        Course course3 = new Course("J2EE Dev ", 40, LocalDateTime.of(2018, 5, 18, 12, 0));
+        Course course4 = new Course("DevOps", 30, LocalDateTime.of(2018, 6, 5, 17, 0));
+        Course course5 = new Course("DB Analis", 34, LocalDateTime.of(2018, 5, 25, 13, 0));
+
+        List<Course> program1 = new ArrayList<>();
+        program1.add(course1);
+        program1.add(course2);
+        program1.add(course3);
+
+        Student student1 = new Student("Ivan", "Sergeev", program1, "Java");
+
+        List<Course> program2 = new ArrayList<>();
+        program2.add(course4);
+        program2.add(course5);
+
+        Student student2 = new Student("Petr", "Alekseev", program2, "AnaliticProgram");
+        List<Student> students = new ArrayList<>();
+        students.add(student1);
+        students.add(student2);
 
 
+        int step = in.nextInt();
+        if (step == 0) {
+            for (Student student: students) {
+                LocalDateTime startDate = student.getStartProgramDate();
+                System.out.print(student.getName() + " " + student.getSurname() + " (" + student.getProgramName() + ") " + student.isFinishedProgram(startDate));
+                System.out.println();
+            }
 
-        int n = in.nextInt();
-        if (n == 0) {
-            System.out.println(student1.getProgramTimeLeft());
-            System.out.println(student2.getProgramTimeLeft());
-        }else{
-            System.out.println(student1.getFirstName() + " " + student1.getLastName());
-            StudyProgram program = student1.getProgram();
-            System.out.println(program.getStartDate());
-            List<Course> courses1 = program.getCourses();
-            for (Course course : courses1){
-                System.out.println(course.getName() + " Duration: " + course.getDuration());
+        }
+        else {
+            for (Student student: students) {
+                int days = student.durationOfProgram()/8;
+                int hours = student.durationOfProgram()%8;
+                LocalDateTime startProgramDate = student.getStartProgramDate();
+                LocalDateTime endProgramDate = startProgramDate.plusDays(days).plusHours(hours);
+                if (endProgramDate.getHour() >= 18) {
+                    endProgramDate = endProgramDate.plusHours(16);
+                }
+                System.out.print(student.getName() + " " + student.getSurname() + " (" + student.getProgramName() + ") " + student.durationOfProgram() + " " +
+                startProgramDate + " " + endProgramDate + " " + student.isFinishedProgram(startProgramDate));
+                System.out.println();
             }
         }
+
+
     }
 }
